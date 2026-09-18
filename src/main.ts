@@ -45,14 +45,26 @@ let galleryIndex = 0;
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
-const productImages: Record<string, string[]> = {
-  '01': ['./resources/tee-01-1.jpg', './resources/tee-01-2.jpg', './resources/tee-01-3.jpg', './resources/tee-01-4.jpg'],
-  '02': ['./resources/tee-02-1.jpg', './resources/tee-02-2.jpg', './resources/tee-02-3.jpg', './resources/tee-02-4.jpg'],
-  '03': ['./resources/hoodie-01.jpg', './resources/hoodie-02.jpg', './resources/hoodie-03.jpg', './resources/hoodie-04.jpg'],
+const productImages: Record<string, Record<string, string[]>> = {
+  '01': {
+    'VOID': Array.from({ length: 5 }, (_, i) => `./resources/tee-01-void-${i + 1}.jpg`),
+    'ERROR WHITE': Array.from({ length: 5 }, (_, i) => `./resources/tee-01-white-${i + 1}.jpg`),
+    'STATIC BLUE': Array.from({ length: 5 }, (_, i) => `./resources/tee-01-blue-${i + 1}.jpg`),
+  },
+  '02': {
+    'VOID': Array.from({ length: 5 }, (_, i) => `./resources/tee-02-void-${i + 1}.jpg`),
+    'ERROR WHITE': Array.from({ length: 5 }, (_, i) => `./resources/tee-02-white-${i + 1}.jpg`),
+    'STATIC BLUE': Array.from({ length: 5 }, (_, i) => `./resources/tee-02-blue-${i + 1}.jpg`),
+  },
+  '03': {
+    'ACID LEMON': Array.from({ length: 5 }, (_, i) => `./resources/hoodie-01-lemon-${i + 1}.jpg`),
+    'ERROR WHITE': Array.from({ length: 5 }, (_, i) => `./resources/hoodie-01-white-${i + 1}.jpg`),
+    'GLITCH PINK': Array.from({ length: 5 }, (_, i) => `./resources/hoodie-01-pink-${i + 1}.jpg`),
+  },
 };
 
 function photoVisual(product: Product, large = false): string {
-  const image = productImages[product.code]?.[0] || '';
+  const image = productImages[product.code]?.[product.kind === 'hoodie' ? 'ACID LEMON' : 'VOID']?.[0] || '';
   const className = product.kind === 'hoodie' ? 'hoodieFrontPhoto' : 'teeFrontPhoto';
   return `<div class="photoVisual ${large ? 'large' : ''} ${className}" role="img" aria-label="ABSURD ${product.name}"><img src="${image}" alt="ABSURD ${product.name}" /></div>`;
 }
@@ -135,7 +147,7 @@ const tee02VariantCropBoxes: Array<[number, number, number, number]> = [
 ];
 
 function productGallery(p: Product): string {
-  const images = productImages[p.code] || [];
+  const images = productImages[p.code]?.[selectedColor] || [];
   const shots = images.map((image, i) => `<div class="galleryShot ${galleryIndex === i ? 'active' : ''}"><img class="sheetImg" src="${image}" alt="ABSURD ${p.name} — фото ${i + 1}" /></div>`).join('');
   const count = images.length;
   return `<div class="gallery color-${colorClass(selectedColor)}"><div class="galleryStage">${shots}<button class="galleryArrow galleryPrev" id="galleryPrev" aria-label="Предыдущее фото">←</button><button class="galleryArrow galleryNext" id="galleryNext" aria-label="Следующее фото">→</button><div class="galleryCounter">${count ? galleryIndex + 1 : 0} / ${count}</div></div></div>`;
@@ -158,7 +170,7 @@ function openProduct(index: number): void {
     const target = e.target as HTMLElement | null;
     if (target?.matches('input, textarea, select')) return;
     e.preventDefault();
-    const galleryCount = productImages[p.code]?.length || 0;
+    const galleryCount = productImages[p.code]?.[selectedColor]?.length || 0;
     galleryIndex = e.key === 'ArrowLeft'
       ? (galleryIndex + galleryCount - 1) % galleryCount
       : (galleryIndex + 1) % galleryCount;
