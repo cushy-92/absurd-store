@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { font-family: Arial, Helvetica, sans-serif; color: #fff; background: #050505; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #050505; color: #fff; }
+button { font: inherit; }
+.locked { overflow: hidden; }
+header { position: sticky; top: 0; z-index: 10; height: 76px; padding: 0 5vw; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #222; background: rgba(5, 5, 5, 0.96); }
+.logoMark { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; } .logoMark img { display: block; width: 40px; height: 40px; border-radius: 50%; }
+header button { color: #fff; background: transparent; border: 1px solid #333; padding: 11px 17px; cursor: pointer; }
+.hero { min-height: 58vh; padding: 110px 5vw 85px; display: flex; flex-direction: column; justify-content: flex-end; border-bottom: 1px solid #1b1b1b; background: radial-gradient(circle at 78% 35%, #181818 0, #080808 32%, #050505 62%); }
+.hero small, .info small { color: #777; font-size: 12px; letter-spacing: 3px; }
+.hero h1 { margin: 12px 0 8px; font-size: clamp(64px, 14vw, 160px); line-height: 0.85; letter-spacing: -6px; font-weight: 500; font-family: Georgia, 'Times New Roman', serif; }
+.hero p { margin: 0; color: #777; letter-spacing: 4px; font-size: 12px; }
+.catalog { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 18px; padding: 34px 5vw 110px; }
+.card { cursor: pointer; outline: none; }
+.card:focus-visible { outline: 1px solid #fff; outline-offset: 5px; }
+.visual, .photoVisual { aspect-ratio: 5 / 6; background: #0d0d0d; overflow: hidden; border: 1px solid #1d1d1d; position: relative; }
+.photoVisual { background-repeat: no-repeat; transition: transform 0.3s ease; background-color: #111; }
+.teeFrontPhoto { background-color: #111; background-size: 300% 200%; background-position: 0 0; }
+.sheet01Front { background-image: url('/resources/asymmetric-tee-sheet.png'); background-size: 252.8226% auto; background-position: 0 0; }
+.sheet02Front { background-image: url('/resources/wrong-tee-sheet.png'); background-size: 263.9839% auto; background-position: 0 0; }
+.photoVisual.large { min-height: 520px; aspect-ratio: auto; background-size: contain; background-position: center; background-color: #111; }
+.visual::after, .photoVisual::after { content: ''; display: none; }
+.hoodieVisual::before { content: ''; display: none; }
+.visual svg { width: 100%; height: 100%; display: block; transition: transform 0.3s ease; }
+.card:hover .visual svg, .card:hover .photoVisual { transform: scale(1.025); }
+.card:hover .visual, .card:hover .photoVisual { border-color: #3a3a3a; }
+.card:active .visual svg, .card:active .photoVisual { transform: scale(1.01); }
+.meta { display: flex; justify-content: space-between; gap: 15px; padding: 16px 0; border-bottom: 1px solid #222; }
+.meta h2 { margin: 0; font-size: 14px; letter-spacing: 1px; }
+.meta span { color: #aaa; font-size: 14px; white-space: nowrap; }
+footer { border-top: 1px solid #222; padding: 30px 5vw; color: #666; font-size: 12px; display: flex; align-items: center; justify-content: space-between; gap: 20px; } .supportEmail { margin-left: auto; color: #888; text-decoration: none; font-size: 11px; } .supportEmail:hover { color: #fff; } .sizeChartTrigger { color: #fff; background: transparent; border: 1px solid #333; padding: 11px 16px; font-size: 10px; letter-spacing: 1.8px; cursor: pointer; } .sizeChartTrigger:hover { border-color: #777; } .sizeChartBackdrop { position: fixed; inset: 0; z-index: 80; padding: 20px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.78); } .sizeChartWindow { position: relative; width: min(560px, 100%); padding: 34px; background: #111; border: 1px solid #292929; box-shadow: 0 20px 70px rgba(0,0,0,.55); } .sizeChartWindow small { color: #777; font-size: 10px; letter-spacing: 2px; } .sizeChartWindow h2 { margin: 9px 0 8px; font-size: 24px; letter-spacing: -.5px; } .sizeChartNote { margin: 0 0 22px; color: #777; font-size: 11px; } .sizeChartClose { position: absolute; top: 10px; right: 14px; border: 0; background: transparent; color: #fff; font-size: 28px; cursor: pointer; } .sizeTableWrap { overflow-x: auto; } .sizeTable { width: 100%; border-collapse: collapse; min-width: 430px; } .sizeTable th, .sizeTable td { padding: 13px 12px; border-top: 1px solid #292929; text-align: center; font-size: 11px; } .sizeTable thead th { color: #777; font-size: 9px; letter-spacing: 1.5px; font-weight: 500; } .sizeTable tbody th { color: #fff; font-weight: 600; } .sizeTable td { color: #ccc; }
+.backdrop { position: fixed; inset: 0; z-index: 50; padding: 20px; display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.84); }
+.modal { width: min(920px, 100%); max-height: 92vh; overflow: auto; position: relative; display: grid; grid-template-columns: 1fr 1fr; background: #111; border: 1px solid #292929; }
+.visual.large { min-height: 520px; aspect-ratio: auto; }
+.gallery { min-height: 520px; background: #090909; border-right: 1px solid #222; }
+.fullSheetFrame { min-height: 520px; height: 100%; padding: 20px; display: flex; align-items: center; justify-content: center; background: #111; overflow: hidden; }
+.fullSheetFrame img { display: block; width: 100%; height: 100%; max-height: 520px; object-fit: contain; object-position: center; }
+.galleryStage { position: relative; height: min(68vh, 620px); min-height: 420px; overflow: hidden; background: #111; display: flex; align-items: center; justify-content: center; }
+.galleryShot { position: absolute; inset: 0; opacity: 0; pointer-events: none; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.teeCanvas { display: block; width: 100%; height: 100%; object-fit: contain; image-rendering: auto; }
+.teeGallery .teeCanvasShot { background: #111; filter: none !important; }
+.teeGallery .teeCanvasShot .teeCanvas { image-rendering: auto; }
+.teeGallery .teeCanvasShot .teeCanvas { filter: contrast(1.035) saturate(1.015); }
+.galleryShot.active { opacity: 1; }
+.galleryShot::before { content: ''; position: absolute; inset: 0; display: block; width: 100% !important; height: 100% !important; flex: none !important; aspect-ratio: auto !important; background-repeat: no-repeat; background-color: #111; background-origin: border-box; filter: contrast(1.035) saturate(.98); }
+.teeSheetShot::before { background-repeat: no-repeat; background-color: #111; }
+.sheet01View0::before { aspect-ratio: 496 / 676; background-image: url('/resources/asymmetric-tee-sheet.png'); background-size: 252.8226% auto; background-position: 0 0; }
+.sheet01View1::before { aspect-ratio: 410 / 676; background-image: url('/resources/asymmetric-tee-sheet.png'); background-size: 305.8537% auto; background-position: 59.0047% 0; }
+.sheet01View2::before { aspect-ratio: 334 / 676; background-image: url('/resources/asymmetric-tee-sheet.png'); background-size: 375.4491% auto; background-position: 100% 0; }
+.sheet01View3::before { width: 58%; flex-basis: 58%; aspect-ratio: 292 / 339; background-image: url('/resources/asymmetric-tee-sheet.png'); background-size: 429.4521% auto; background-position: 3.5343% 77.1585%; }
+.sheet01View4::before { width: 58%; flex-basis: 58%; aspect-ratio: 283 / 339; background-image: url('/resources/asymmetric-tee-sheet.png'); background-size: 443.1095% auto; background-position: 34.7065% 77.1585%; }
+.sheet01View5::before { aspect-ratio: 280 / 339; background-image: url('/resources/asymmetric-tee-sheet.png'); background-size: 447.8571% auto; background-position: 64.8871% 77.1585%; }
+.sheet01View6::before { width: 58%; flex-basis: 58%; aspect-ratio: 292 / 339; background-image: url('/resources/asymmetric-tee-sheet.png'); background-size: 429.4521% auto; background-position: 95.9459% 77.1585%; }
+.sheet02View0::before { aspect-ratio: 497 / 600; background-image: url('/resources/wrong-tee-sheet.png'); background-size: 263.9839% auto; background-position: 0 0; }
+.sheet02View1::before { aspect-ratio: 425 / 600; background-image: url('/resources/wrong-tee-sheet.png'); background-size: 308.7059% auto; background-position: 56.1443% 0; }
+.sheet02View2::before { aspect-ratio: 377 / 600; background-image: url('/resources/wrong-tee-sheet.png'); background-size: 348.0106% auto; background-position: 100% 0; }
+.sheet02View3::before { width: 58%; flex-basis: 58%; aspect-ratio: 264 / 333; background-image: url('/resources/wrong-tee-sheet.png'); background-size: 496.9697% auto; background-position: 2.3855% 70.0924%; }
+.sheet02View4::before { aspect-ratio: 234 / 333; background-image: url('/resources/wrong-tee-sheet.png'); background-size: 560.6838% auto; background-position: 27.7365% 70.0924%; }
+.sheet02View5::before { width: 58%; flex-basis: 58%; aspect-ratio: 234 / 333; background-image: url('/resources/wrong-tee-sheet.png'); background-size: 560.6838% auto; background-position: 50.3711% 70.0924%; }
+.sheet02View6::before { aspect-ratio: 224 / 333; background-image: url('/resources/wrong-tee-sheet.png'); background-size: 585.7143% auto; background-position: 72.3346% 70.0924%; }
+.sheet02View7::before { width: 58%; flex-basis: 58%; aspect-ratio: 265 / 333; background-image: url('/resources/wrong-tee-sheet.png'); background-size: 495.0943% auto; background-position: 97.7077% 70.0924%; }
+.shotFront::before { width: 100%; height: 100%; left: 0; top: 0; background-size: contain; background-position: center; }
+.shotBack::before { width: 100%; height: 100%; left: 0; top: 0; background-size: contain; background-position: center; }
+.galleryArrow { position: absolute; top: 50%; z-index: 3; width: 44px; height: 44px; transform: translateY(-50%); border: 1px solid rgba(255,255,255,.28); background: rgba(0,0,0,.55); color: #fff; font-size: 22px; cursor: pointer; }
+.galleryPrev { left: 16px; }
+.galleryNext { right: 16px; }
+.galleryCounter { position: absolute; right: 16px; bottom: 14px; z-index: 3; color: #aaa; font-size: 11px; letter-spacing: 2px; }
+.galleryThumbs { display: none; }
+.galleryThumb { position: relative; min-height: 72px; overflow: hidden; border: 1px solid #292929; background: #111; color: #aaa; cursor: pointer; padding: 0; }
+.galleryThumb.selected { border-color: #fff; color: #fff; }
+.galleryThumb span { display: block; height: 48px; background-image: url('/resources/product-views.png'); background-repeat: no-repeat; background-size: 600% auto; }
+.galleryThumb small { position: absolute; left: 8px; bottom: 5px; font-size: 8px; letter-spacing: 1.5px; }
+.teeShot { display: none; }
+.teeShot.active { display: none; }
+.teeShot[data-view='1'] { background-position: 50% 0; }
+.teeShot[data-view='2'] { background-position: 100% 0; }
+.teeThumb { display: none; }
+.thumbFront { background-position: 0 19%; }
+.thumbBack { background-position: 42% 19%; }
+.close, #closeCart { background: none; border: 0; color: #fff; cursor: pointer; font-size: 30px; }
+.close { position: absolute; top: 9px; right: 15px; z-index: 2; }
+.info { padding: 45px 40px; }
+.info h2 { margin: 10px 0; font-size: 32px; letter-spacing: -1px; }
+.price { font-size: 19px; margin-bottom: 28px; }
+.stock { margin-bottom: 22px; font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; }
+.optionLabel { margin-top: 22px; margin-bottom: 9px; font-size: 10px; letter-spacing: 2px; color: #777; }
+.colors { display: flex; flex-wrap: wrap; gap: 7px; }
+.color { border: 1px solid #292929; background: transparent; color: #aaa; padding: 10px 12px; font-size: 10px; letter-spacing: 1.2px; cursor: pointer; }
+.color.selected { border-color: #fff; color: #fff; }
+.sizes { display: flex; gap: 8px; margin-bottom: 28px; }
+.size { min-width: 52px; padding: 13px 15px; color: #fff; background: #111; border: 1px solid #444; cursor: pointer; }
+.size.selected { color: #000; background: #fff; border-color: #fff; }
+.quantity { display: inline-flex; align-items: center; border: 1px solid #292929; height: 42px; margin-bottom: 28px; }
+.quantity button { width: 42px; height: 100%; border: 0; background: transparent; color: #fff; font-size: 20px; cursor: pointer; }
+.quantity span { min-width: 42px; text-align: center; font-size: 13px; }
+.add, #pay { width: 100%; padding: 16px; color: #000; background: #fff; border: 0; font-weight: 700; cursor: pointer; }
+#drawer { position: fixed; z-index: 60; top: 0; right: 0; width: min(420px, 100%); height: 100%; padding: 28px; background: #101010; transform: translateX(100%); transition: transform 0.25s ease; box-shadow: -15px 0 45px rgba(0, 0, 0, 0.45); }
+#drawer.open { transform: translateX(0); }
+.drawerHead { display: flex; align-items: center; justify-content: space-between; padding-bottom: 18px; border-bottom: 1px solid #333; }
+.cartList { padding: 18px 0; }
+.cartItem { display: flex; justify-content: space-between; gap: 18px; padding: 14px 0; border-bottom: 1px solid #222; color: #ccc; font-size: 13px; }
+.cartItem small { display: block; margin-top: 5px; color: #777; font-size: 10px; }
+.cartQty { display: inline-flex; align-items: center; margin-top: 9px; border: 1px solid #292929; }
+.cartQty button { width: 28px; height: 26px; border: 0; background: transparent; color: #fff; cursor: pointer; }
+.cartQty span { width: 28px; text-align: center; font-size: 11px; }
+.cartList p { color: #666; }
+.galleryShot::before { display: none !important; } .galleryShot { background-repeat: no-repeat; background-color: #111; background-origin: border-box; filter: contrast(1.035) saturate(.98); } .sheet01View0 { background-image: url('/resources/asymmetric-tee-sheet.png'); background-size: 252.8226% auto; background-position: 0 0; } .sheet01View1 { background-image: url('/resources/asymmetric-tee-sheet.png'); background-size: 305.8537% auto; background-position: 59.0047% 0; } .sheet01View2 { background-image: url('/resources/asymmetric-tee-sheet.png'); background-size: 375.4491% auto; background-position: 100% 0; } .sheet01View3 { background-image: url('/resources/asymmetric-tee-sheet.png'); background-size: 429.4521% auto; background-position: 3.5343% 77.1585%; } .sheet01View4 { background-image: url('/resources/asymmetric-tee-sheet.png'); background-size: 443.1095% auto; background-position: 34.7065% 77.1585%; } .sheet01View5 { background-image: url('/resources/asymmetric-tee-sheet.png'); background-size: 447.8571% auto; background-position: 64.8871% 77.1585%; } .sheet01View6 { background-image: url('/resources/asymmetric-tee-sheet.png'); background-size: 429.4521% auto; background-position: 95.9459% 77.1585%; } .sheet02View0 { background-image: url('/resources/wrong-tee-sheet.png'); background-size: 263.9839% auto; background-position: 0 0; } .sheet02View1 { background-image: url('/resources/wrong-tee-sheet.png'); background-size: 308.7059% auto; background-position: 56.1443% 0; } .sheet02View2 { background-image: url('/resources/wrong-tee-sheet.png'); background-size: 348.0106% auto; background-position: 100% 0; } .sheet02View3 { background-image: url('/resources/wrong-tee-sheet.png'); background-size: 496.9697% auto; background-position: 2.3855% 70.0924%; } .sheet02View4 { background-image: url('/resources/wrong-tee-sheet.png'); background-size: 560.6838% auto; background-position: 27.7365% 70.0924%; } .sheet02View5 { background-image: url('/resources/wrong-tee-sheet.png'); background-size: 560.6838% auto; background-position: 50.3711% 70.0924%; } .sheet02View6 { background-image: url('/resources/wrong-tee-sheet.png'); background-size: 585.7143% auto; background-position: 72.3346% 70.0924%; } .sheet02View7 { background-image: url('/resources/wrong-tee-sheet.png'); background-size: 495.0943% auto; background-position: 97.7077% 70.0924%; } .shotFront, .shotBack { background-repeat: no-repeat; background-size: contain; background-position: center; } .photoVisual > img { display: block; position: absolute; max-width: none; width: 300%; height: auto; left: 0; top: 0; }
+.photoVisual { position: relative; }
+.galleryShot .sheetImg { display: none; }
+.sheet01View0 .sheetImg, .sheet01View1 .sheetImg, .sheet01View2 .sheetImg { display: none; }
+.sheet01View0 .sheetImg { object-position: 0% 50%; }
+.sheet01View1 .sheetImg { object-position: 50% 50%; }
+.sheet01View2 .sheetImg { object-position: 100% 50%; }
+.sheet01View3 .sheetImg, .sheet01View4 .sheetImg, .sheet01View5 .sheetImg, .sheet01View6 .sheetImg { display: none; }
+.sheet01View3 .sheetImg { object-position: 0% 100%; }
+.sheet01View4 .sheetImg { object-position: 33% 100%; }
+.sheet01View5 .sheetImg { object-position: 67% 100%; }
+.sheet01View6 .sheetImg { object-position: 100% 100%; }
+.sheet02View0 .sheetImg, .sheet02View1 .sheetImg, .sheet02View2 .sheetImg { display: none; }
+.sheet02View0 .sheetImg { object-position: 0% 50%; }
+.sheet02View1 .sheetImg { object-position: 50% 50%; }
+.sheet02View2 .sheetImg { object-position: 100% 50%; }
+.sheet02View3 .sheetImg, .sheet02View4 .sheetImg, .sheet02View5 .sheetImg, .sheet02View6 .sheetImg, .sheet02View7 .sheetImg { display: none; }
+.sheet02View3 .sheetImg { object-position: 0% 100%; }
+.sheet02View4 .sheetImg { object-position: 28% 100%; }
+.sheet02View5 .sheetImg { object-position: 50% 100%; }
+.sheet02View6 .sheetImg { object-position: 72% 100%; }
+.sheet02View7 .sheetImg { object-position: 100% 100%; }
+.hoodieGallery .galleryShot { background-image: url('/resources/asymmetric-hoodie-sheet.png'); background-repeat: no-repeat; background-color: #111; background-origin: border-box; }
+.hoodieView0 { background-size: 274.40% auto; background-position: 0 0; }
+.hoodieView1 { background-size: 286.30% auto; background-position: 56.00% 0; }
+.hoodieView2 { background-size: 349.30% auto; background-position: 100% 0; }
+.hoodieView3 { background-size: 466.17% auto; background-position: 2.34% 72.5%; }
+.hoodieView4 { background-size: 538.20% auto; background-position: 29.77% 70.7%; }
+.hoodieView5 { background-size: 552.42% auto; background-position: 53.55% 70.1%; }
+.hoodieView6 { background-size: 552.42% auto; background-position: 76.92% 70.1%; }
+.hoodieView7 { background-size: 620.79% auto; background-position: 97.81% 67.7%; }
+.hoodieFrontPhoto { background-image: url('/resources/asymmetric-hoodie-sheet.png'); background-size: 274.40% auto; background-position: 0 0; }
+
+@media (max-width: 700px) {
+  .gallery { min-height: 390px; border-right: 0; }
+  .galleryStage { height: 58vh; min-height: 330px; max-height: 520px; }
+  .catalog { grid-template-columns: repeat(2, 1fr); }
+  .modal { grid-template-columns: 1fr; }
+  .visual.large, .photoVisual.large { min-height: 350px; }
+  .info { padding: 28px; }
+}
+@media (max-width: 480px) {
+  .catalog { grid-template-columns: 1fr; }
+  .hero { padding-top: 75px; }
+  .hero h1 { letter-spacing: -5px; }
+  footer { flex-wrap: wrap; }
+  .supportEmail { margin-left: 0; width: 100%; text-align: right; }
+}
+
+/* Final precise collage crops: every source photo meets the same frame edges. */
+.teeGallery .galleryStage { box-sizing: border-box; }
+.teeGallery.color-white .galleryStage { background: #080808; }
+.teeGallery .galleryShot { box-sizing: border-box; border: 0 !important; outline: 0 !important; }
+.teeGallery .galleryShot::before { border: 0 !important; outline: 0 !important; }
+.teeGallery .galleryShot { background-clip: padding-box; }
+.sheet01View0 { background-size: 250% auto !important; background-position: 0 0 !important; transform: none !important; }
+.sheet01View1 { background-size: 302.44% auto !important; background-position: 59.76% 0 !important; }
+.sheet01View2 { background-size: 371.26% auto !important; background-position: 100% 0 !important; }
+.sheet01View3 { background-size: 392.81% auto !important; background-position: 0 77.16% !important; }
+.sheet01View4 { background-size: 405.30% auto !important; background-position: 33.80% 77.16% !important; }
+.sheet01View5 { background-size: 409.64% auto !important; background-position: 66.32% 77.16% !important; }
+.sheet01View6 { background-size: 392.81% auto !important; background-position: 100% 77.16% !important; }
+.sheet02View0 { background-size: 261.37% auto !important; background-position: 0 0 !important; }
+.sheet02View1 { background-size: 305.65% auto !important; background-position: 56.86% 0 !important; }
+.sheet02View2 { background-size: 344.56% auto !important; background-position: 100% 0 !important; }
+.sheet02View3 { background-size: 462.50% auto !important; background-position: 0 70.09% !important; }
+.sheet02View4 { background-size: 521.79% auto !important; background-position: 26.75% 70.09% !important; }
+.sheet02View5 { background-size: 521.79% auto !important; background-position: 50.46% 70.09% !important; }
+.sheet02View6 { background-size: 545.09% auto !important; background-position: 73.42% 70.09% !important; }
+.sheet02View7 { background-size: 460.75% auto !important; background-position: 100% 70.09% !important; }
+
+/* Selected product color changes every gallery photo. */
+.gallery.color-black .galleryShot { filter: contrast(1.035) saturate(.98); }
+.teeGallery.color-white .galleryShot { filter: grayscale(1) brightness(1.18) contrast(.72) saturate(.82); background-color: #1b1b1b; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); }
+.hoodieGallery.color-white .galleryShot { filter: grayscale(1) brightness(.88) contrast(1.08); }
+.gallery.color-blue .galleryShot { filter: grayscale(.16) sepia(.08) saturate(2.35) hue-rotate(180deg) brightness(.92) contrast(1.02); }
+.teeGallery.color-white .galleryShot { filter: none !important; background-color: #080808; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); }
+.gallery.color-lemon .galleryShot { filter: sepia(.22) saturate(1.18) hue-rotate(-6deg) brightness(1.03); }
+.gallery.color-pink .galleryShot { filter: sepia(.18) saturate(2.25) hue-rotate(300deg) brightness(1.02); }
