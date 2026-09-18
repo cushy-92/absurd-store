@@ -183,7 +183,7 @@ function openProduct(index: number): void {
     document.querySelectorAll<HTMLButtonElement>('.galleryThumb').forEach(button => button.addEventListener('click', () => { galleryIndex = Number(button.dataset.gallery || 0); openProductGallery(p); }));
   }
   document.querySelector('#backdrop')?.addEventListener('click', e => { if (e.target === e.currentTarget) closeProduct(); });
-  document.querySelectorAll<HTMLButtonElement>('.color').forEach(b => b.addEventListener('click', () => { selectedColor = b.dataset.color || ''; document.querySelectorAll('.color').forEach(x => x.classList.remove('selected')); b.classList.add('selected'); const gallery = document.querySelector('.gallery'); if (gallery) { gallery.classList.remove('color-black', 'color-white', 'color-pink', 'color-blue', 'color-lemon'); gallery.classList.add(`color-${colorClass(selectedColor)}`); } if (p.kind === 'tee') paintTeeGallery(p); }));
+  document.querySelectorAll<HTMLButtonElement>('.color').forEach(b => b.addEventListener('click', () => { selectedColor = b.dataset.color || ''; document.querySelectorAll('.color').forEach(x => x.classList.remove('selected')); b.classList.add('selected'); const gallery = document.querySelector('.gallery'); if (gallery) { gallery.classList.remove('color-black', 'color-white', 'color-pink', 'color-blue', 'color-lemon'); gallery.classList.add(`color-${colorClass(selectedColor)}`); } }));
   document.querySelectorAll<HTMLButtonElement>('.size').forEach(b => b.addEventListener('click', () => { selectedSize = b.dataset.size || ''; document.querySelectorAll('.size').forEach(x => x.classList.remove('selected')); b.classList.add('selected'); }));
   document.querySelector('#qtyMinus')?.addEventListener('click', () => { selectedQuantity = Math.max(1, selectedQuantity - 1); const value = document.querySelector('#qtyValue'); if (value) value.textContent = String(selectedQuantity); });
   document.querySelector('#qtyPlus')?.addEventListener('click', () => { selectedQuantity = Math.min(p.stock, selectedQuantity + 1); const value = document.querySelector('#qtyValue'); if (value) value.textContent = String(selectedQuantity); });
@@ -204,10 +204,9 @@ function openProductGallery(p: Product): void {
   const gallery = document.querySelector('.gallery');
   if (!gallery) return;
   gallery.outerHTML = productGallery(p);
-  if (p.kind === 'tee') paintTeeGallery(p);
-    const galleryCount = productImages[p.code]?.[selectedColor]?.length || 0;
+  const galleryCount = productImages[p.code]?.[selectedColor]?.length || 0;
   document.querySelector('#galleryPrev')?.addEventListener('click', () => { galleryIndex = galleryCount ? (galleryIndex + galleryCount - 1) % galleryCount : 0; openProductGallery(p); });
-  document.querySelector('#galleryNext')?.addEventListener('click', () => { galleryIndex = (galleryIndex + 1) % galleryCount; openProductGallery(p); });
+  document.querySelector('#galleryNext')?.addEventListener('click', () => { galleryIndex = galleryCount ? (galleryIndex + 1) % galleryCount : 0; openProductGallery(p); });
   document.querySelectorAll<HTMLButtonElement>('.galleryThumb').forEach(button => button.addEventListener('click', () => { galleryIndex = Number(button.dataset.gallery || 0); openProductGallery(p); }));
 }
 
