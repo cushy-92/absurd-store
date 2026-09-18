@@ -45,8 +45,14 @@ let galleryIndex = 0;
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
+const productImages: Record<string, string[]> = {
+  '01': ['./resources/tee-01-1.jpg', './resources/tee-01-2.jpg', './resources/tee-01-3.jpg', './resources/tee-01-4.jpg'],
+  '02': ['./resources/tee-02-1.jpg', './resources/tee-02-2.jpg', './resources/tee-02-3.jpg', './resources/tee-02-4.jpg'],
+  '03': ['./resources/hoodie-01.jpg', './resources/hoodie-02.jpg', './resources/hoodie-03.jpg', './resources/hoodie-04.jpg'],
+};
+
 function photoVisual(product: Product, large = false): string {
-  const image = product.code === '01' ? './resources/asymmetric-tee-sheet.png' : product.code === '02' ? './resources/wrong-tee-sheet.png' : './resources/asymmetric-hoodie-sheet.png';
+  const image = productImages[product.code]?.[0] || '';
   const className = product.kind === 'hoodie' ? 'hoodieFrontPhoto' : 'teeFrontPhoto';
   return `<div class="photoVisual ${large ? 'large' : ''} ${className}" role="img" aria-label="ABSURD ${product.name}"><img src="${image}" alt="ABSURD ${product.name}" /></div>`;
 }
@@ -129,15 +135,10 @@ const tee02VariantCropBoxes: Array<[number, number, number, number]> = [
 ];
 
 function productGallery(p: Product): string {
-  if (p.kind === 'tee') {
-    const count = teeCropBoxes[p.code].length;
-    const shots = teeCropBoxes[p.code].map((_, i) => `<div class="galleryShot teeCanvasShot ${galleryIndex === i ? 'active' : ''}"><canvas class="teeCanvas" data-tee="${p.code}" data-view="${i}" aria-label="ABSURD ${p.name} — фото ${i + 1}"></canvas></div>`).join('');
-    return `<div class="gallery teeGallery color-${colorClass(selectedColor)}"><div class="galleryStage">${shots}<button class="galleryArrow galleryPrev" id="galleryPrev" aria-label="Предыдущее фото">←</button><button class="galleryArrow galleryNext" id="galleryNext" aria-label="Следующее фото">→</button><div class="galleryCounter">${galleryIndex + 1} / ${count}</div></div></div>`;
-  }
-  const sourceIndexes = [0, 1, 2, 3, 5, 6, 7];
-  const image = './resources/asymmetric-hoodie-sheet.png';
-  const shots = sourceIndexes.map((sourceIndex, i) => `<div class="galleryShot hoodieSheetShot hoodieView${sourceIndex} ${galleryIndex === i ? 'active' : ''}"><img class="sheetImg" src="${image}" alt="ABSURD ${p.name} — фото ${i + 1}" /></div>`).join('');
-  return `<div class="gallery hoodieGallery color-${colorClass(selectedColor)}"><div class="galleryStage">${shots}<button class="galleryArrow galleryPrev" id="galleryPrev" aria-label="Предыдущее фото">←</button><button class="galleryArrow galleryNext" id="galleryNext" aria-label="Следующее фото">→</button><div class="galleryCounter">${galleryIndex + 1} / ${sourceIndexes.length}</div></div></div>`;
+  const images = productImages[p.code] || [];
+  const shots = images.map((image, i) => `<div class="galleryShot ${galleryIndex === i ? 'active' : ''}"><img class="sheetImg" src="${image}" alt="ABSURD ${p.name} — фото ${i + 1}" /></div>`).join('');
+  const count = images.length;
+  return `<div class="gallery color-${colorClass(selectedColor)}"><div class="galleryStage">${shots}<button class="galleryArrow galleryPrev" id="galleryPrev" aria-label="Предыдущее фото">←</button><button class="galleryArrow galleryNext" id="galleryNext" aria-label="Следующее фото">→</button><div class="galleryCounter">${count ? galleryIndex + 1 : 0} / ${count}</div></div></div>`;
 }
 
 function openProduct(index: number): void {
@@ -157,7 +158,7 @@ function openProduct(index: number): void {
     const target = e.target as HTMLElement | null;
     if (target?.matches('input, textarea, select')) return;
     e.preventDefault();
-    const galleryCount = p.kind === 'hoodie' ? 7 : (p.code === '02' ? 7 : 6);
+    const galleryCount = productImages[p.code]?.length || 0;
     galleryIndex = e.key === 'ArrowLeft'
       ? (galleryIndex + galleryCount - 1) % galleryCount
       : (galleryIndex + 1) % galleryCount;
@@ -165,7 +166,7 @@ function openProduct(index: number): void {
   };
   document.addEventListener('keydown', handleGalleryKeydown);
   if (p.kind === 'hoodie' || p.kind === 'tee') {
-    const galleryCount = p.kind === 'hoodie' ? 7 : (p.code === '02' ? 7 : 6);
+    const galleryCount = productImages[p.code]?.length || 0;
     document.querySelector('#galleryPrev')?.addEventListener('click', () => { galleryIndex = (galleryIndex + galleryCount - 1) % galleryCount; openProductGallery(p); });
     document.querySelector('#galleryNext')?.addEventListener('click', () => { galleryIndex = (galleryIndex + 1) % galleryCount; openProductGallery(p); });
     document.querySelectorAll<HTMLButtonElement>('.galleryThumb').forEach(button => button.addEventListener('click', () => { galleryIndex = Number(button.dataset.gallery || 0); openProductGallery(p); }));
@@ -186,114 +187,6 @@ function openProduct(index: number): void {
     render();
     document.querySelector('#drawer')?.classList.add('open');
   });
-}
-
-function paintTeeGallery(p: Product): void {
-  if (p.kind !== 'tee') return;
-  const color = colorClass(selectedColor);
-  const source = p.code === '01'
-    ? (color === 'white' ? './resources/tee-01-white-sheet.jpg' : color === 'blue' ? './resources/tee-01-blue-sheet.jpg' : './resources/asymmetric-tee-sheet.png')
-    : (color === 'white' ? './resources/tee-02-white-sheet.jpg' : color === 'blue' ? './resources/tee-02-blue-sheet.jpg' : './resources/wrong-tee-sheet.png');
-  const boxes = teeCropBoxes[p.code];
-  const isTeeVariant = (p.code === '01' || p.code === '02') && (color === 'white' || color === 'blue');
-  const variantBoxes = p.code === '01'
-    ? (isTeeVariant ? tee01VariantCropBoxes : null)
-    : (isTeeVariant ? tee02VariantCropBoxes : null);
-  const canvases = document.querySelectorAll<HTMLCanvasElement>('.teeCanvas');
-  const image = new Image();
-  image.onload = () => {
-    canvases.forEach(canvas => {
-      const index = Number(canvas.dataset.view || 0);
-      const box = variantBoxes?.[index] || boxes[index];
-      if (!box) return;
-      const [bx, by, bx2, by2] = box;
-      const sx = variantBoxes ? Math.round(bx * image.naturalWidth) : bx;
-      const sy = variantBoxes ? Math.round(by * image.naturalHeight) : by;
-      const ex = variantBoxes ? Math.round(bx2 * image.naturalWidth) : bx2;
-      const ey = variantBoxes ? Math.round(by2 * image.naturalHeight) : by2;
-      const sw = ex - sx;
-      const sh = ey - sy;
-      const renderScale = 2;
-      canvas.width = sw * renderScale;
-      canvas.height = sh * renderScale;
-      const ctx = canvas.getContext('2d', { willReadFrequently: true });
-      if (!ctx) return;
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = 'high';
-      // The supplied variant sheets have visible sensor/compression grain.
-      // A very light pre-upscale blur suppresses only the finest noise while
-      // leaving seams, fabric texture, and garment edges readable.
-      ctx.filter = isTeeVariant ? 'blur(0.32px)' : 'none';
-      ctx.drawImage(image, sx, sy, sw, sh, 0, 0, sw * renderScale, sh * renderScale);
-      ctx.filter = 'none';
-      if (isTeeVariant) return;
-      if (color === 'black') return;
-      const frame = ctx.getImageData(0, 0, sw, sh);
-      const data = frame.data;
-      const gray = new Uint8Array(sw * sh);
-      for (let i = 0; i < sw * sh; i += 1) {
-        const p = i * 4;
-        gray[i] = Math.round(0.299 * data[p] + 0.587 * data[p + 1] + 0.114 * data[p + 2]);
-      }
-      let seed = Math.floor(sh * 0.5) * sw + Math.floor(sw * 0.5);
-      let best = seed;
-      let bestValue = gray[seed];
-      for (let y = Math.floor(sh * 0.4); y < Math.floor(sh * 0.62); y += 3) {
-        for (let x = Math.floor(sw * 0.4); x < Math.floor(sw * 0.6); x += 3) {
-          const idx = y * sw + x;
-          if (gray[idx] < bestValue) { bestValue = gray[idx]; best = idx; }
-        }
-      }
-      seed = best;
-      const mask = new Uint8Array(sw * sh);
-      const stack = [seed];
-      while (stack.length) {
-        const idx = stack.pop()!;
-        if (mask[idx] || gray[idx] >= 105) continue;
-        mask[idx] = 1;
-        const x = idx % sw;
-        const y = Math.floor(idx / sw);
-        if (x > 0) stack.push(idx - 1);
-        if (x < sw - 1) stack.push(idx + 1);
-        if (y > 0) stack.push(idx - sw);
-        if (y < sh - 1) stack.push(idx + sw);
-      }
-      let maskCount = 0;
-      for (let i = 0; i < mask.length; i += 1) maskCount += mask[i];
-      if (maskCount < sw * sh * 0.08) {
-        mask.fill(0);
-        const fallbackThreshold = 118;
-        for (let i = 0; i < sw * sh; i += 1) {
-          if (gray[i] <= fallbackThreshold) mask[i] = 1;
-        }
-      }
-      for (let i = 0; i < sw * sh; i += 1) {
-        if (!mask[i]) continue;
-        const p = i * 4;
-        const g = gray[i];
-        if (color === 'white') {
-          // Re-map the original black tee's luminance into the requested warm white.
-          // Dark source pixels stay as believable fabric shadows; brighter pixels reach
-          // the target RGB so folds, highlights, and material texture remain visible.
-          const normalized = Math.max(0, Math.min(1, g / 105));
-          const factor = 0.54 + Math.pow(normalized, 0.78) * 0.46;
-          data[p] = Math.min(255, Math.round(242 * factor));
-          data[p + 1] = Math.min(255, Math.round(240 * factor));
-          data[p + 2] = Math.min(255, Math.round(234 * factor));
-        } else if (color === 'blue') {
-          // Use the requested blue as the garment's midtone while preserving the
-          // original luminance so folds, shadows, highlights, and fabric texture remain visible.
-          const luminance = g / 128;
-          const factor = Math.max(0.34, Math.min(1.45, 0.32 + luminance * 0.68));
-          data[p] = Math.min(255, Math.round(76 * factor));
-          data[p + 1] = Math.min(255, Math.round(81 * factor));
-          data[p + 2] = Math.min(255, Math.round(93 * factor));
-        }
-      }
-      ctx.putImageData(frame, 0, 0);
-    });
-  };
-  image.src = source;
 }
 
 function openProductGallery(p: Product): void {
