@@ -1,0 +1,23 @@
+name: Deploy ABSURD to AppDeploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: |
+          npm ci
+          npm run build
+      - name: Deploy
+        env:
+          APPDEPLOY_TOKEN: ${{ secrets.APPDEPLOY_TOKEN }}
+        run: |
+          echo "AppDeploy deployment hook is not configured yet."
+          echo "Connect this workflow to the AppDeploy deployment API/token to enable automatic publishing."
+          exit 1
