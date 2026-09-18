@@ -164,7 +164,6 @@ function openProduct(index: number): void {
   document.querySelector<HTMLDivElement>('#modal')!.innerHTML = `<div class="backdrop" id="backdrop"><section class="modal"><button class="close" id="close">×</button>${productGallery(p)}<div class="info"><small>DROP 001</small><h2>${p.name}</h2><div class="price">${p.price.toLocaleString('ru-RU')} ₽</div><div class="stock">Осталось: ${p.stock} шт.</div><div class="optionLabel">ЦВЕТ</div><div class="colors">${colors.map(c => `<button class="color ${selectedColor === c ? 'selected' : ''}" data-color="${c}">${c}</button>`).join('')}</div><div class="optionLabel">РАЗМЕР</div><div class="sizes">${['S', 'M', 'L', 'XL'].map(s => `<button class="size" data-size="${s}">${s}</button>`).join('')}</div><div class="optionLabel">КОЛИЧЕСТВО</div><div class="quantity"><button id="qtyMinus">−</button><span id="qtyValue">1</span><button id="qtyPlus">+</button></div><button class="add" id="add">В КОРЗИНУ</button></div></section></div>`;
   document.body.classList.add('locked');
   document.querySelector('#close')?.addEventListener('click', closeProduct);
-  paintTeeGallery(p);
   const handleGalleryKeydown = (e: KeyboardEvent) => {
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
     const target = e.target as HTMLElement | null;
@@ -180,7 +179,7 @@ function openProduct(index: number): void {
   if (p.kind === 'hoodie' || p.kind === 'tee') {
     const galleryCount = productImages[p.code]?.length || 0;
     document.querySelector('#galleryPrev')?.addEventListener('click', () => { galleryIndex = (galleryIndex + galleryCount - 1) % galleryCount; openProductGallery(p); });
-    document.querySelector('#galleryNext')?.addEventListener('click', () => { galleryIndex = (galleryIndex + 1) % galleryCount; openProductGallery(p); });
+    document.querySelector('#galleryNext')?.addEventListener('click', () => { galleryIndex = galleryCount ? (galleryIndex + 1) % galleryCount : 0; openProductGallery(p); });
     document.querySelectorAll<HTMLButtonElement>('.galleryThumb').forEach(button => button.addEventListener('click', () => { galleryIndex = Number(button.dataset.gallery || 0); openProductGallery(p); }));
   }
   document.querySelector('#backdrop')?.addEventListener('click', e => { if (e.target === e.currentTarget) closeProduct(); });
@@ -206,7 +205,7 @@ function openProductGallery(p: Product): void {
   if (!gallery) return;
   gallery.outerHTML = productGallery(p);
   if (p.kind === 'tee') paintTeeGallery(p);
-    const galleryCount = p.kind === 'hoodie' ? 7 : (p.code === '02' ? 7 : 6);
+    const galleryCount = productImages[p.code]?.[selectedColor]?.length || 0;
   document.querySelector('#galleryPrev')?.addEventListener('click', () => { galleryIndex = galleryCount ? (galleryIndex + galleryCount - 1) % galleryCount : 0; openProductGallery(p); });
   document.querySelector('#galleryNext')?.addEventListener('click', () => { galleryIndex = (galleryIndex + 1) % galleryCount; openProductGallery(p); });
   document.querySelectorAll<HTMLButtonElement>('.galleryThumb').forEach(button => button.addEventListener('click', () => { galleryIndex = Number(button.dataset.gallery || 0); openProductGallery(p); }));
