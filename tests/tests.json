@@ -1,0 +1,51 @@
+[
+  {
+    "name": "Open a product and add the asymmetric hoodie in its default color",
+    "sanity": true,
+    "viewport": "desktop",
+    "covers": ["product catalog", "asymmetric hoodie product", "product details modal", "default product color", "size selection", "add to cart"],
+    "description": "Verifies the hoodie opens with lemon selected by default and can be added to the cart with the selected size.",
+    "steps": ["Open the ABSURD catalog", "Click the ASYMMETRIC HOODIE card", "Confirm color ACID LEMON is selected", "Select size L", "Click В КОРЗИНУ", "Open the cart"],
+    "expected": "ASYMMETRIC HOODIE is visible in the cart and the cart item shows color ACID LEMON and size L."
+  },
+  {
+    "name": "Show the cleaned individual product photos",
+    "viewport": "desktop",
+    "covers": ["tee product gallery", "individual cropped product photos", "removed gallery photos", "clean gallery without view labels", "hoodie product gallery"],
+    "description": "Verifies the first tee gallery has 6 photos, the second tee gallery has 7 photos, and the hoodie gallery has 7 photos, with the requested fifth photos removed.",
+    "steps": ["Open the ABSURD catalog", "Click the ASYMMETRIC TEE card", "Advance through the gallery with the right arrow", "Open the WRONG TEE card and advance through its gallery", "Open the ASYMMETRIC HOODIE card and advance through its gallery"],
+    "expected": "The first tee shows 6 photos, the second tee shows 7 photos, and the hoodie shows 7 photos; the second tee switches to the supplied white and blue photo sets with each collage frame cropped cleanly and the full T-shirt visible."
+  },
+  {
+    "name": "Remove the last cart item with the minus button",
+    "viewport": "desktop",
+    "covers": ["cart item removal", "minus button at quantity one", "cart count update"],
+    "description": "Verifies that pressing minus on an item with quantity one removes that item from the cart completely.",
+    "steps": ["Open a product", "Select a size and add one item to the cart", "Open the cart", "Press the minus button for that item"],
+    "expected": "The item is removed from the cart and the cart count decreases accordingly."
+  },
+  {
+    "name": "Use the default black color on a tee with size and quantity",
+    "viewport": "desktop",
+    "covers": ["default product color", "product color selection", "product size selection", "quantity selector", "cart quantity"],
+    "description": "Verifies the tee color gallery behavior, including switching the first and second tees to their supplied white and blue photo sets.",
+    "steps": ["Open the ASYMMETRIC TEE product", "Confirm color VOID is selected", "Select color ERROR WHITE", "Confirm the product gallery switches to the supplied white photo set", "Select color STATIC BLUE", "Confirm the product gallery switches to the supplied blue photo set", "Select size M", "Increase quantity to 2", "Add the product to the cart"],
+    "expected": "The cart shows ASYMMETRIC TEE in ЧЁРНЫЙ, size M, with quantity 2."
+  },
+  {
+    "name": "Open an existing tee without showing its description on the card",
+    "viewport": "desktop",
+    "covers": ["tee catalog card", "uploaded product photo", "clickable product card", "product details view"],
+    "description": "Verifies catalog cards stay minimal while product details remain available after opening the card.",
+    "steps": ["Open the ABSURD catalog", "Click the ASYMMETRIC TEE card"],
+    "expected": "The catalog card shows the uploaded product photo with only the product name and price; clicking it opens the product view."
+  },
+  {
+    "name": "Require a size before adding to cart while retaining the default color",
+    "viewport": "mobile",
+    "covers": ["default color state", "size selection validation", "mobile product modal", "invalid add-to-cart guardrail"],
+    "description": "Verifies the default color is already selected but the product still requires a size before it can be added.",
+    "steps": ["Open the catalog on a mobile viewport", "Open the ASYMMETRIC TEE card", "Confirm color VOID is selected", "Click В КОРЗИНУ without selecting a size"],
+    "expected": "A visible message asks the user to choose a size and no item is added to the cart."
+  }
+]
