@@ -187,3 +187,34 @@ footer { border-top: 1px solid #222; padding: 30px 5vw; color: #666; font-size: 
 .teeGallery.color-white .galleryShot { filter: none !important; background-color: #080808; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); }
 .gallery.color-lemon .galleryShot { filter: sepia(.22) saturate(1.18) hue-rotate(-6deg) brightness(1.03); }
 .gallery.color-pink .galleryShot { filter: sepia(.18) saturate(2.25) hue-rotate(300deg) brightness(1.02); }
+
+
+/* Direct product photos: no collage crops or color filters. */
+.photoVisual > img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  object-position: center;
+}
+.galleryShot .sheetImg {
+  display: block !important;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  object-position: center;
+  background: #111;
+  z-index: 1;
+}
+.galleryShot {
+  background-image: none !important;
+  filter: none !important;
+}
+.galleryShot::before {
+  display: none !important;
+}
