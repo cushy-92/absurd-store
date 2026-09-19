@@ -45,38 +45,75 @@ let galleryIndex = 0;
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
+const photo = (name: string): string => `https://raw.githubusercontent.com/cushy-92/absurd-store/main/${encodeURIComponent(name)}`;
+
 const productImages: Record<string, Record<string, string[]>> = {
   '01': {
-    'VOID': Array.from({ length: 5 }, (_, i) => `./resources/tee-01-void-${i + 1}.jpg`),
-    'ERROR WHITE': Array.from({ length: 5 }, (_, i) => `./resources/tee-01-white-${i + 1}.jpg`),
-    'STATIC BLUE': Array.from({ length: 5 }, (_, i) => `./resources/tee-01-blue-${i + 1}.jpg`),
+    'VOID': [
+      photo('черная майка спереди шов.JPG'),
+      photo('черная футболка сзади шов.JPG'),
+      photo('черный рукав рваный.JPG'),
+      photo('черная бирка снаружи.JPG'),
+      photo('черная бирка внутри.JPG'),
+    ],
+    'ERROR WHITE': [
+      photo('белая майка спереди шов.JPG'),
+      photo('белая шов сзади.JPG'),
+      photo('белый рукав рваный.JPG'),
+      photo('белая бирка снаружи.JPG'),
+      photo('белая бирка внутри.JPG'),
+    ],
+    'STATIC BLUE': [
+      photo('синяя майка спереди шов.JPG'),
+      photo('синяя майка сзади щов.JPG'),
+      photo('синий рукав.JPG'),
+      photo('синяя бирка снаружи.JPG'),
+      photo('синяя этикетка.JPG'),
+    ],
   },
   '02': {
-    'VOID': Array.from({ length: 5 }, (_, i) => `./resources/tee-02-void-${i + 1}.jpg`),
-    'ERROR WHITE': Array.from({ length: 5 }, (_, i) => `./resources/tee-02-white-${i + 1}.jpg`),
-    'STATIC BLUE': Array.from({ length: 5 }, (_, i) => `./resources/tee-02-blue-${i + 1}.jpg`),
+    'VOID': [
+      photo('черная рваная спереди.JPG'),
+      photo('черная майка рванная сзади.JPG'),
+      photo('черный рукав рваный.JPG'),
+      photo('черная футболка бирка сзади.JPG'),
+      photo('черная бирка.JPG'),
+    ],
+    'ERROR WHITE': [
+      photo('белая рваная спереди.JPG'),
+      photo('белая рваная сзади.JPG'),
+      photo('белый рукав рваный.JPG'),
+      photo('белая бирка снаружи (2).JPG'),
+      photo('белая бирка.JPG'),
+    ],
   },
   '03': {
-    'ACID LEMON': Array.from({ length: 5 }, (_, i) => `./resources/hoodie-01-lemon-${i + 1}.jpg`),
-    'ERROR WHITE': Array.from({ length: 5 }, (_, i) => `./resources/hoodie-01-white-${i + 1}.jpg`),
-    'GLITCH PINK': Array.from({ length: 5 }, (_, i) => `./resources/hoodie-01-pink-${i + 1}.jpg`),
+    'ACID LEMON': [
+      photo('желтый худи спереди.JPG'),
+      photo('желтый худи сзади.JPG'),
+      photo('желтый худи рукав.JPG'),
+      photo('желтая бирка снаружи.JPG'),
+      photo('желтый бирка внятри.JPG'),
+    ],
+    'ERROR WHITE': [
+      photo('белая худи спереди.JPG'),
+      photo('белый хкди сзади.JPG'),
+      photo('белый худи рукав.JPG'),
+      photo('бирка снаружи белая худи.JPG'),
+      photo('белый худи бирка внутри.JPG'),
+    ],
+    'GLITCH PINK': [
+      photo('розовый худи спереди.JPG'),
+      photo('розовый худи сзади.JPG'),
+      photo('розовый рукав.JPG'),
+      photo('розовый худи бирка.JPG'),
+      photo('розовыц, бирка внутри.JPG'),
+    ],
   },
 };
 
-function photoVisual(product: Product, large = false): string {
-  const image = productImages[product.code]?.[product.kind === 'hoodie' ? 'ACID LEMON' : 'VOID']?.[0] || '';
-  const className = product.kind === 'hoodie' ? 'hoodieFrontPhoto' : 'teeFrontPhoto';
-  return `<div class="photoVisual ${large ? 'large' : ''} ${className}" role="img" aria-label="ABSURD ${product.name}"><img src="${image}" alt="ABSURD ${product.name}" /></div>`;
-}
-
-function visual(product: Product, large = false): string {
-  const hoodie = product.kind === 'hoodie';
-  const garment = hoodie
-    ? '<path d="M190 170 L250 115 L350 115 L410 170 L505 245 L445 335 L395 290 L395 625 L205 625 L205 290 L155 335 L95 245 Z" fill="#242424"/><path d="M248 115 Q275 175 350 115 L382 145 Q325 205 248 145 Z" fill="#171717"/><path d="M205 290 L155 335 M395 290 L445 335" stroke="#0b0b0b" stroke-width="8"/><path d="M230 440 Q300 425 370 440" fill="none" stroke="#111" stroke-width="5"/><rect x="250" y="462" width="100" height="105" rx="5" fill="#202020" stroke="#111" stroke-width="5"/>'
-    : '<path d="M190 145 L250 105 L350 105 L410 145 L505 235 L445 315 L400 275 L400 610 L200 610 L200 275 L155 315 L95 235 Z" fill="#e9e9e9"/><path d="M250 105 Q300 155 350 105" fill="none" stroke="#111" stroke-width="12"/><path d="M200 275 L155 315 M400 275 L445 315" stroke="#111" stroke-width="7"/>';
-  const ink = hoodie ? '#eee' : '#111';
-  const subInk = hoodie ? '#aaa' : '#555';
-  return `<div class="visual ${large ? 'large' : ''} ${hoodie ? 'hoodieVisual' : ''}"><svg viewBox="0 0 600 720" role="img" aria-label="ABSURD ${product.name}"><defs><linearGradient id="fabric${product.code}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${hoodie ? '#333' : '#fff'}"/><stop offset=".5" stop-color="${hoodie ? '#181818' : '#d8d8d8'}"/><stop offset="1" stop-color="${hoodie ? '#0e0e0e' : '#f4f4f4'}"/></linearGradient></defs><rect width="600" height="720" fill="#0d0d0d"/><rect x="38" y="38" width="524" height="644" fill="url(#fabric${product.code})" opacity=".12"/>${garment.replace(hoodie ? 'fill="#242424"' : 'fill="#e9e9e9"', `fill="url(#fabric${product.code})"`)}<text x="300" y="390" text-anchor="middle" fill="${ink}" font-family="Arial" font-size="30" font-weight="700" letter-spacing="3">ABSURD</text><text x="300" y="425" text-anchor="middle" fill="${subInk}" font-family="Arial" font-size="13" letter-spacing="5">${product.code} / DROP 001</text></svg></div>`;
+function availableColors(p: Product): string[] {
+  return Object.keys(productImages[p.code] || {});
 }
 
 function render(): void {
@@ -159,7 +196,7 @@ function openProduct(index: number): void {
   selectedQuantity = 1;
   galleryIndex = 0;
   const p = products[index];
-  const colors = p.kind === 'hoodie' ? ['ACID LEMON', 'ERROR WHITE', 'GLITCH PINK'] : ['VOID', 'ERROR WHITE', 'STATIC BLUE'];
+  const colors = availableColors(p);
   selectedColor = p.kind === 'hoodie' ? 'ACID LEMON' : 'VOID';
   document.querySelector<HTMLDivElement>('#modal')!.innerHTML = `<div class="backdrop" id="backdrop"><section class="modal"><button class="close" id="close">×</button>${productGallery(p)}<div class="info"><small>DROP 001</small><h2>${p.name}</h2><div class="price">${p.price.toLocaleString('ru-RU')} ₽</div><div class="stock">Осталось: ${p.stock} шт.</div><div class="optionLabel">ЦВЕТ</div><div class="colors">${colors.map(c => `<button class="color ${selectedColor === c ? 'selected' : ''}" data-color="${c}">${c}</button>`).join('')}</div><div class="optionLabel">РАЗМЕР</div><div class="sizes">${['S', 'M', 'L', 'XL'].map(s => `<button class="size" data-size="${s}">${s}</button>`).join('')}</div><div class="optionLabel">КОЛИЧЕСТВО</div><div class="quantity"><button id="qtyMinus">−</button><span id="qtyValue">1</span><button id="qtyPlus">+</button></div><button class="add" id="add">В КОРЗИНУ</button></div></section></div>`;
   document.body.classList.add('locked');
@@ -176,14 +213,14 @@ function openProduct(index: number): void {
     openProductGallery(p);
   };
   document.addEventListener('keydown', handleGalleryKeydown);
-  if (p.kind === 'hoodie' || p.kind === 'tee') {
-    const galleryCount = productImages[p.code]?.length || 0;
+  if (productImages[p.code]?.[selectedColor]?.length) {
+    const galleryCount = productImages[p.code]?.[selectedColor]?.length || 0;
     document.querySelector('#galleryPrev')?.addEventListener('click', () => { galleryIndex = (galleryIndex + galleryCount - 1) % galleryCount; openProductGallery(p); });
     document.querySelector('#galleryNext')?.addEventListener('click', () => { galleryIndex = galleryCount ? (galleryIndex + 1) % galleryCount : 0; openProductGallery(p); });
     document.querySelectorAll<HTMLButtonElement>('.galleryThumb').forEach(button => button.addEventListener('click', () => { galleryIndex = Number(button.dataset.gallery || 0); openProductGallery(p); }));
   }
   document.querySelector('#backdrop')?.addEventListener('click', e => { if (e.target === e.currentTarget) closeProduct(); });
-  document.querySelectorAll<HTMLButtonElement>('.color').forEach(b => b.addEventListener('click', () => { selectedColor = b.dataset.color || ''; document.querySelectorAll('.color').forEach(x => x.classList.remove('selected')); b.classList.add('selected'); const gallery = document.querySelector('.gallery'); if (gallery) { gallery.classList.remove('color-black', 'color-white', 'color-pink', 'color-blue', 'color-lemon'); gallery.classList.add(`color-${colorClass(selectedColor)}`); } }));
+  document.querySelectorAll<HTMLButtonElement>('.color').forEach(b => b.addEventListener('click', () => { selectedColor = b.dataset.color || ''; galleryIndex = 0; openProductGallery(p); document.querySelectorAll('.color').forEach(x => x.classList.remove('selected')); b.classList.add('selected'); }));
   document.querySelectorAll<HTMLButtonElement>('.size').forEach(b => b.addEventListener('click', () => { selectedSize = b.dataset.size || ''; document.querySelectorAll('.size').forEach(x => x.classList.remove('selected')); b.classList.add('selected'); }));
   document.querySelector('#qtyMinus')?.addEventListener('click', () => { selectedQuantity = Math.max(1, selectedQuantity - 1); const value = document.querySelector('#qtyValue'); if (value) value.textContent = String(selectedQuantity); });
   document.querySelector('#qtyPlus')?.addEventListener('click', () => { selectedQuantity = Math.min(p.stock, selectedQuantity + 1); const value = document.querySelector('#qtyValue'); if (value) value.textContent = String(selectedQuantity); });
@@ -205,9 +242,15 @@ function openProductGallery(p: Product): void {
   if (!gallery) return;
   gallery.outerHTML = productGallery(p);
   const galleryCount = productImages[p.code]?.[selectedColor]?.length || 0;
-  document.querySelector('#galleryPrev')?.addEventListener('click', () => { galleryIndex = galleryCount ? (galleryIndex + galleryCount - 1) % galleryCount : 0; openProductGallery(p); });
-  document.querySelector('#galleryNext')?.addEventListener('click', () => { galleryIndex = galleryCount ? (galleryIndex + 1) % galleryCount : 0; openProductGallery(p); });
-  document.querySelectorAll<HTMLButtonElement>('.galleryThumb').forEach(button => button.addEventListener('click', () => { galleryIndex = Number(button.dataset.gallery || 0); openProductGallery(p); }));
+  if (!galleryCount) return;
+  document.querySelector('#galleryPrev')?.addEventListener('click', () => {
+    galleryIndex = (galleryIndex + galleryCount - 1) % galleryCount;
+    openProductGallery(p);
+  });
+  document.querySelector('#galleryNext')?.addEventListener('click', () => {
+    galleryIndex = (galleryIndex + 1) % galleryCount;
+    openProductGallery(p);
+  });
 }
 
 function openSizeChart(): void {
@@ -228,4 +271,10 @@ function closeProduct(): void {
   document.body.classList.remove('locked');
   active = -1;
 }
-render();
+render();function photoVisual(product: Product, large = false): string {
+  const defaultColor = product.kind === 'hoodie' ? 'ACID LEMON' : 'VOID';
+  const image = productImages[product.code]?.[defaultColor]?.[0] || '';
+  const className = product.kind === 'hoodie' ? 'hoodieFrontPhoto' : 'teeFrontPhoto';
+  return `<div class="photoVisual ${large ? 'large' : ''} ${className}" role="img" aria-label="ABSURD ${product.name}"><img src="${image}" alt="ABSURD ${product.name}" /></div>`;
+}
+
