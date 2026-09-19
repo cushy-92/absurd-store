@@ -72,13 +72,6 @@ const productImages: Record<string, Record<string, string[]>> = {
     ],
   },
   '02': {
-    'STATIC BLUE': [
-      photo('синяя майкарваная спереди.JPG'),
-      photo('синяя рваная сзади.JPG'),
-      photo('синий рукав.JPG'),
-      photo('синяя бирка (2).JPG'),
-      photo('синяя этикетка.JPG'),
-    ],
     'VOID': [
       photo('черная рваная спереди.JPG'),
       photo('черная майка рванная сзади.JPG'),
@@ -92,6 +85,13 @@ const productImages: Record<string, Record<string, string[]>> = {
       photo('белый рукав рваный.JPG'),
       photo('белая бирка снаружи (2).JPG'),
       photo('белая бирка.JPG'),
+    ],
+    'STATIC BLUE': [
+      photo('синяя майкарваная спереди.JPG'),
+      photo('синяя рваная сзади.JPG'),
+      photo('синий рукав.JPG'),
+      photo('синяя бирка (2).JPG'),
+      photo('синяя этикетка.JPG'),
     ],
   },
   '03': {
