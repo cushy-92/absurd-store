@@ -229,3 +229,46 @@ footer { border-top: 1px solid #222; padding: 30px 5vw; color: #666; font-size: 
 .logoMark img { border-radius: 0; }
 header button:hover, .sizeChartTrigger:hover { border-color: #4C515D; }
 @media (max-width: 480px) { .hero h1 { letter-spacing: -.075em; font-size: clamp(3.8rem, 15vw, 5rem); } .conceptNotice { font-size: 9px; letter-spacing: 1px; } }
+
+
+/* MISFORM product-photo labels: cover the old ABSURD masthead baked into source mockups. */
+.misformImageLabel {
+  position: absolute;
+  z-index: 5;
+  top: 3.8%;
+  left: 4.5%;
+  width: 57%;
+  min-height: 16%;
+  box-sizing: border-box;
+  padding: 8px 9px 7px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  overflow: hidden;
+  color: #111;
+  background: rgba(195, 195, 192, .99);
+  border-left: 2px solid #4C515D;
+  pointer-events: none;
+}
+.misformImageLabel b {
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(12px, 1.8vw, 22px);
+  line-height: .95;
+  font-weight: 800;
+  letter-spacing: -.07em;
+}
+.misformImageLabel small {
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(5px, .7vw, 8px);
+  line-height: 1.35;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+@media (max-width: 700px) {
+  .misformImageLabel { width: 60%; min-height: 15%; padding: 7px; gap: 4px; }
+  .misformImageLabel b { font-size: clamp(12px, 4vw, 18px); }
+  .misformImageLabel small { font-size: 6px; }
+}
