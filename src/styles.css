@@ -218,3 +218,14 @@ footer { border-top: 1px solid #222; padding: 30px 5vw; color: #666; font-size: 
 .galleryShot::before {
   display: none !important;
 }
+
+
+/* MISFORM rebrand: preserve the existing storefront layout while sharpening the identity. */
+.hero { background: radial-gradient(circle at 78% 35%, #20232a 0, #090909 34%, #050505 65%); }
+.hero h1 { font-family: Arial, Helvetica, sans-serif; font-weight: 800; letter-spacing: -.085em; text-transform: uppercase; }
+.hero p { color: #F2F0EA; }
+.conceptNotice { width: fit-content; max-width: 100%; margin-top: 28px; padding: 11px 14px; border: 1px solid #4C515D; color: #aeb3bf; font-size: 10px; letter-spacing: 1.6px; line-height: 1.6; }
+.stock { color: #aeb3bf; border-left: 2px solid #4C515D; padding-left: 10px; }
+.logoMark img { border-radius: 0; }
+header button:hover, .sizeChartTrigger:hover { border-color: #4C515D; }
+@media (max-width: 480px) { .hero h1 { letter-spacing: -.075em; font-size: clamp(3.8rem, 15vw, 5rem); } .conceptNotice { font-size: 9px; letter-spacing: 1px; } }
