@@ -194,7 +194,7 @@ function productGallery(p: Product): string {
   const images = productImages[p.code]?.[selectedColor] || [];
   const shots = images.map((image, i) => `<div class="galleryShot ${galleryIndex === i ? 'active' : ''}"><img class="sheetImg" src="${image}" alt="MISFORM ${p.name} — фото ${i + 1}" /></div>`).join('');
   const count = images.length;
-  return `<div class="gallery color-${colorClass(selectedColor)}"><div class="galleryStage">${shots}<button class="galleryArrow galleryPrev" id="galleryPrev" aria-label="Предыдущее фото">←</button><button class="galleryArrow galleryNext" id="galleryNext" aria-label="Следующее фото">→</button><div class="galleryCounter">${count ? galleryIndex + 1 : 0} / ${count}</div></div></div>`;
+  return `<div class="gallery color-${colorClass(selectedColor)}"><div class="galleryStage">${shots}<div class="misformImageLabel" aria-hidden="true"><b>MISFORM</b><small>DROP 001 · INTENTIONAL IMPERFECTION</small></div><button class="galleryArrow galleryPrev" id="galleryPrev" aria-label="Предыдущее фото">←</button><button class="galleryArrow galleryNext" id="galleryNext" aria-label="Следующее фото">→</button><div class="galleryCounter">${count ? galleryIndex + 1 : 0} / ${count}</div></div></div>`;
 }
 
 function openProduct(index: number): void {
@@ -282,6 +282,6 @@ render();function photoVisual(product: Product, large = false): string {
   const defaultColor = product.kind === 'hoodie' ? 'ACID LEMON' : 'VOID';
   const image = productImages[product.code]?.[defaultColor]?.[0] || '';
   const className = product.kind === 'hoodie' ? 'hoodieFrontPhoto' : 'teeFrontPhoto';
-  return `<div class="photoVisual ${large ? 'large' : ''} ${className}" role="img" aria-label="MISFORM ${product.name}"><img src="${image}" alt="MISFORM ${product.name}" /></div>`;
+  return `<div class="photoVisual ${large ? 'large' : ''} ${className}" role="img" aria-label="MISFORM ${product.name}"><img src="${image}" alt="MISFORM ${product.name}" /><div class="misformImageLabel" aria-hidden="true"><b>MISFORM</b><small>DROP 001 · INTENTIONAL IMPERFECTION</small></div></div>`;
 }
 
