@@ -45,80 +45,78 @@ let galleryIndex = 0;
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
-const photo = (name: string): string => `https://raw.githubusercontent.com/cushy-92/absurd-store/main/${encodeURIComponent(name)}`;
+const photo = (name: string): string => `https://raw.githubusercontent.com/cushy-92/absurd-store/cushy-92-patch-1/${encodeURIComponent(name)}`;
 
 const productImages: Record<string, Record<string, string[]>> = {
   '01': {
     'VOID': [
-      photo('черная майка спереди шов.JPG'),
+      photo('черный шов спереди.jpg'),
       photo('черная футболка сзади шов.JPG'),
       photo('черный рукав рваный.JPG'),
-      photo('черная бирка снаружи.JPG'),
-      photo('черная бирка внутри.JPG'),
+      photo('черный бирка снаружи.jpg'),
+      photo('черный бирка внутри.jpg'),
     ],
     'ERROR WHITE': [
-      photo('белая майка спереди шов.JPG'),
+      photo('белый шов спереди.jpg'),
       photo('белая шов сзади.JPG'),
       photo('белый рукав рваный.JPG'),
-      photo('белая бирка снаружи.JPG'),
-      photo('белая бирка внутри.JPG'),
+      photo('белый бирка.jpg'),
+      photo('белый бирка внутри.jpg'),
     ],
     'STATIC BLUE': [
-      photo('синяя майка спереди шов.JPG'),
+      photo('синий шов спереди.jpg'),
       photo('синяя майка сзади щов.JPG'),
       photo('синий рукав.JPG'),
-      photo('синяя бирка снаружи.JPG'),
-      photo('синяя этикетка.JPG'),
+      photo('синий бирка.jpg'),
+      photo('синий бирка внутри.jpg'),
     ],
   },
   '02': {
     'VOID': [
-      photo('черная рваная спереди.JPG'),
+      photo('черный рваный спереди.jpg'),
       photo('черная майка рванная сзади.JPG'),
       photo('черный рукав рваный.JPG'),
-      photo('черная футболка бирка сзади.JPG'),
-      photo('черная бирка.JPG'),
+      photo('черный бирка снаружи2.jpg'),
+      photo('черный бирка внутри 2.jpg'),
     ],
     'ERROR WHITE': [
-      photo('белая рваная спереди.JPG'),
+      photo('белый рваный спереди.jpg'),
       photo('белая рваная сзади.JPG'),
       photo('белый рукав рваный.JPG'),
-      photo('белая бирка снаружи (2).JPG'),
-      photo('белая бирка.JPG'),
+      photo('белый этитка2.jpg'),
+      photo('белый бирка внутри.jpg'),
     ],
     'STATIC BLUE': [
-      photo('синяя майкарваная спереди.JPG'),
+      photo('синий рваный спереди.jpg'),
       photo('синяя рваная сзади.JPG'),
-      photo('синий рукав.JPG'),
-      photo('синяя бирка (2).JPG'),
-      photo('синяя этикетка.JPG'),
+      photo('синий рваный рукав.JPG'),
+      photo('синий бирка.jpg'),
+      photo('синий бирка внутри.jpg'),
     ],
   },
   '03': {
     'ACID LEMON': [
-      photo('желтый худи спереди.JPG'),
+      photo('желтый спереди.jpg'),
       photo('желтый худи сзади.JPG'),
       photo('желтый худи рукав.JPG'),
-      photo('желтая бирка снаружи.JPG'),
-      photo('желтый бирка внятри.JPG'),
+      photo('желтый, бирка снаружи.jpg'),
+      photo('желтый, бирка внутри.jpg'),
     ],
     'ERROR WHITE': [
-      photo('белая худи спереди.JPG'),
+      photo('белый худи спереди.jpg'),
       photo('белый хкди сзади.JPG'),
       photo('белый худи рукав.JPG'),
-      photo('бирка снаружи белая худи.JPG'),
-      photo('белый худи бирка внутри.JPG'),
+      photo('белый худи бирка внутри.jpg'),
+      photo('белый худи бирка внутри (2).jpg'),
     ],
     'GLITCH PINK': [
-      photo('розовый худи спереди.JPG'),
+      photo('розовый спереди.jpg'),
       photo('розовый худи сзади.JPG'),
       photo('розовый рукав.JPG'),
-      photo('розовый худи бирка.JPG'),
-      photo('розовыц, бирка внутри.JPG'),
+      photo('розовый бирка внутри.jpg'),
     ],
   },
 };
-
 function availableColors(p: Product): string[] {
   return Object.keys(productImages[p.code] || {});
 }
